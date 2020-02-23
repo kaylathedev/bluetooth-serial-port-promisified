@@ -1,0 +1,33 @@
+{
+  "name": "bluetooth-serial-port-promisified",
+  "version": "1.0.0",
+  "description": "The NodeJS library bluetooth-serial-port but with promises",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kaylathedev/node-bluetooth-serial-port-promisified.git"
+  },
+  "keywords": [
+    "bluetooth",
+    "serial",
+    "port",
+    "rfcomm",
+    "linux",
+    "os",
+    "x",
+    "windows",
+    "promises"
+  ],
+  "author": "Kayla Colflesh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kaylathedev/node-bluetooth-serial-port-promisified/issues"
+  },
+  "homepage": "https://github.com/kaylathedev/node-bluetooth-serial-port-promisified#readme",
+  "dependencies": {
+    "bluetooth-serial-port": "^2.2.7"
+  }
+}
