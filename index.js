@@ -8,8 +8,8 @@ class BluetoothSerialPort extends events {
     this.serialport.on('closed', () => {
       this.emit('closed')
     })
-    this.serialport.on('data', () => {
-      this.emit('data')
+    this.serialport.on('data', (data) => {
+      this.emit('data', data)
     })
     this.serialport.on('debug', () => {
       this.emit('debug')
@@ -17,8 +17,8 @@ class BluetoothSerialPort extends events {
     this.serialport.on('disconnect', () => {
       this.emit('disconnect')
     })
-    this.serialport.on('error', () => {
-      this.emit('error')
+    this.serialport.on('error', (error) => {
+      this.emit('error', error)
     })
     this.serialport.on('failure', () => {
       this.emit('failure')
@@ -60,6 +60,8 @@ class BluetoothSerialPort extends events {
           channel = await this.findSerialPortChannel(address)
         }
         this.serialport.connect(address, channel, () => {
+          this.address = address
+          this.channel = channel
           ok()
         }, error => {
           fail(error)

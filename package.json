@@ -1,6 +1,6 @@
 {
   "name": "bluetooth-serial-port-promisified",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "The NodeJS library bluetooth-serial-port but with promises",
   "main": "index.js",
   "scripts": {
