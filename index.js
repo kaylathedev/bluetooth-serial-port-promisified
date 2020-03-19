@@ -170,4 +170,5 @@ if (parentModule.BluetoothSerialPortServer) {
       return this.server.isOpen()
     }
   }
+  module.exports.BluetoothSerialPortServer = BluetoothSerialPortServer
 }
