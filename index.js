@@ -72,6 +72,9 @@ class BluetoothSerialPort extends events {
     })
   }
   write(buffer) {
+    if (typeof buffer === 'string') {
+      buffer = Buffer.from(buffer, 'utf8')
+    }
     return new Promise((ok, fail) => {
       this.serialport.write(buffer, (error, bytesWritten) => {
         if (error) {
@@ -98,3 +101,73 @@ class BluetoothSerialPort extends events {
 }
 
 module.exports.BluetoothSerialPort = BluetoothSerialPort
+
+if (parentModule.BluetoothSerialPortServer) {
+  class BluetoothSerialPortServer extends events {
+    constructor() {
+      super()
+      this.server = new parentModule.BluetoothSerialPortServer()
+      this.server.on('closed', () => {
+        this.emit('closed')
+      })
+      this.server.on('data', (data) => {
+        this.emit('data', data)
+      })
+      this.server.on('disconnected', () => {
+        this.emit('disconnected')
+      })
+      this.server.on('error', (error) => {
+        this.emit('error', error)
+      })
+      this.server.on('failure', () => {
+        this.emit('failure')
+      })
+    }
+    listen(a, b) {
+      var actualOptions = {}
+      if (a && a.constructor === Object) {
+        Object.assign(actualOptions, a)
+      }
+      if (typeof a === 'number') {
+        actualOptions.channel = a
+      } else if (typeof a === 'string') {
+        actualOptions.uuid = a
+      }
+      if (typeof b === 'number') {
+        actualOptions.channel = b
+      } else if (typeof b === 'string') {
+        actualOptions.uuid = b
+      }
+      return new Promise((ok, fail) => {
+        this.server.listen(function (clientAddress) {
+          ok(clientAddress)
+        }, function (error) {
+          fail(error)
+        }, actualOptions);
+      })
+    }
+    write(buffer) {
+      if (typeof buffer === 'string') {
+        buffer = Buffer.from(buffer, 'utf8')
+      }
+      return new Promise((ok, fail) => {
+        this.serialport.write(buffer, (error, bytesWritten) => {
+          if (error) {
+            fail(error)
+          } else {
+            ok()
+          }
+        })
+      })
+    }
+    disconnectClient() {
+      this.server.disconnectClient()
+    }
+    close() {
+      this.server.close()
+    }
+    isOpen() {
+      return this.server.isOpen()
+    }
+  }
+}
