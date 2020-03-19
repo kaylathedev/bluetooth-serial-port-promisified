@@ -151,7 +151,7 @@ if (parentModule.BluetoothSerialPortServer) {
         buffer = Buffer.from(buffer, 'utf8')
       }
       return new Promise((ok, fail) => {
-        this.serialport.write(buffer, (error, bytesWritten) => {
+        this.server.write(buffer, (error, bytesWritten) => {
           if (error) {
             fail(error)
           } else {
